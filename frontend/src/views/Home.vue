@@ -14,8 +14,7 @@
 </template>
 
 <script>
-
-
+import axios from 'axios'
 export default {
   data(){
     return{
@@ -43,9 +42,15 @@ export default {
       this.$nextTick(() => {this.filebox=true;})
     },
     uploadImage(){
-      // let formData = new FormData();
+      let params = new FormData();
+      params.append('image', this.uploadedImage)
       if(this.uploadedImage){
         alert("画像のアップロードが完了しました。")
+        axios.post("/grayscale",params)
+        .then(response => {
+          console.log(response);
+          this.uploadedImage=response.data.result; 
+        })
       }else{
         alert("画像を選択してください。")
       }
