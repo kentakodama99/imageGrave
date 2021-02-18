@@ -181,7 +181,12 @@ select {
   vertical-align: middle;
 }
 
+/*------------------------*/
+/*     共通のスタイル      */
+/*------------------------*/
+
 html{
-height:100vh;
+  height: 100%;
+  font-size: 62.5%;
 }
 </style>

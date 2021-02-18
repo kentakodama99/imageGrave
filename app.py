@@ -1,4 +1,4 @@
-from flask import Flask,make_response,request,jsonify,render_template,send_file
+from flask import Flask,make_response,request,jsonify,send_file
 from flask_cors import CORS
 import base64
 import numpy as np
@@ -10,10 +10,6 @@ app = Flask(__name__, static_folder="./dist", static_url_path="")
 CORS(app)
 
 # default(アクセス時の最初の画面)
-# @app.route('/')
-# def index():
-#     return render_template('index.html') #アクセス時の最初の画面
-
 @app.errorhandler(404)
 def index(_):
     return send_file("./dist/index.html")
