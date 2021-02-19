@@ -1,13 +1,18 @@
 from flask import Flask,make_response,request,jsonify,send_file
-from flask_cors import CORS
+# from flask_cors import CORS
 import base64
 import numpy as np
 import cv2
 
 app = Flask(__name__, static_folder="./dist", static_url_path="")
-# app = Flask(__name__)
+
+# imgconfig
+UPLOAD_FOLDER = './uploads/'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 #CORS
-CORS(app)
+# CORS(app)
+
 
 # default(アクセス時の最初の画面)
 @app.errorhandler(404)
@@ -21,9 +26,11 @@ def grayscale():
   #画像データは3次元であり、(行データ, 列データ, RGBデータ)である。
   arrayimg = np.asarray(bytearray(binary), dtype=np.uint8) #asarray:Numpy配列と同期 bytearray型(代入可能) 8ビットの符号なし整数(0~255)
   grayimg = cv2.imdecode(arrayimg, 0) #グレースケールとして処理
-  cv2.imwrite('result.png', grayimg) # 変換結果を保存
+  # 変換結果を保存
+  save_path = app.config['UPLOAD_FOLDER']+'result.png'
+  cv2.imwrite(save_path, grayimg) 
   #encode
-  with open('result.png', "rb") as image_file:
+  with open(app.config['UPLOAD_FOLDER']+'result.png', "rb") as image_file:
     data = base64.b64encode(image_file.read())
     data = data.decode('utf-8')
     response = {"result":str(base64img.split(',')[0])+","+str(data)}

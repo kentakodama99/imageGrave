@@ -71,8 +71,12 @@ export default {
             .then(response => {
               console.log(response);
               this.grayImage=response.data.result;
-            })
-            alert("画像のアップロードが完了しました。")
+              alert("画像のアップロードが完了しました。")
+            }).catch(
+              error => {
+                console.log(error);
+                alert("画像のアップロードに失敗しました。")
+                });
           }
       }else{
         alert("画像を選択してください。")
