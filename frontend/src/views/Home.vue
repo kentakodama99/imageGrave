@@ -67,7 +67,7 @@ export default {
           if(confirm("本当にいいの？")){
             let params = new FormData();
             params.append('image', this.uploadedImage)
-            axios.post("/grayscale",params)
+            axios.post("https://infinite-basin-76138.herokuapp.com/grayscale",params)
             .then(response => {
               console.log(response);
               this.grayImage=response.data.result;

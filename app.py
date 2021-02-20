@@ -3,11 +3,12 @@ from flask import Flask,make_response,request,jsonify,send_file
 import base64
 import numpy as np
 import cv2
+import os
 
 app = Flask(__name__, static_folder="./dist", static_url_path="")
 
 # imgconfig
-UPLOAD_FOLDER = './uploads/'
+UPLOAD_FOLDER = './tmp/'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 #CORS
@@ -27,10 +28,10 @@ def grayscale():
   arrayimg = np.asarray(bytearray(binary), dtype=np.uint8) #asarray:Numpy配列と同期 bytearray型(代入可能) 8ビットの符号なし整数(0~255)
   grayimg = cv2.imdecode(arrayimg, 0) #グレースケールとして処理
   # 変換結果を保存
-  save_path = app.config['UPLOAD_FOLDER']+'result.png'
+  save_path = os.path.join(app.config['UPLOAD_FOLDER']+'result.png')
   cv2.imwrite(save_path, grayimg) 
   #encode
-  with open(app.config['UPLOAD_FOLDER']+'result.png', "rb") as image_file:
+  with open(save_path, "rb") as image_file:
     data = base64.b64encode(image_file.read())
     data = data.decode('utf-8')
     response = {"result":str(base64img.split(',')[0])+","+str(data)}
