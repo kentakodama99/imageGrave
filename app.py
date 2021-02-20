@@ -8,7 +8,7 @@ import os
 app = Flask(__name__, static_folder="./dist", static_url_path="")
 
 # imgconfig
-UPLOAD_FOLDER = './tmp/'
+UPLOAD_FOLDER = './tmp'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 #CORS
